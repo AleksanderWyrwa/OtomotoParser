@@ -1,0 +1,11 @@
+body {
+        background: linear-gradient(to bottom, #155e63, #1e868d);
+    color: #ffffff; /* Opcjonalnie: ustawienie koloru tekstu, aby dobrze kontrastował z tłem */
+    font-family: 'Roboto', sans-serif; /* Możesz wybrać dowolną czcionkę */
+    height: 100vh; /* Ustawienie wysokości tła na pełny ekran */
+}
+.list-group-item.active {
+    background-color: #0f454a !important; /* Darker shade of blue-green */
+    border-color: #0f454a !important; /* Matching border color */
+    color: #ffffff !important; /* White text color for better readability */
+}

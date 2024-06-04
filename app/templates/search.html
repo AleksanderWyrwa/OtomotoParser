@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Search</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        #loading-message {
+            display: none;
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 20px;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3">
+                <div class="list-group">
+                    <a href="/" class="list-group-item list-group-item-action">Home</a>
+                    <a href="/search" class="list-group-item list-group-item-action active">Search</a>
+                    <a href="/filter_cars" class="list-group-item list-group-item-action">Filter Cars</a>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1 class="text-center">Car Finder</h1>
+                <p class="text-center">Here u choose a brand and a model of a car to parse. You can also choose only a brand</p>
+                <form id="car-form" class="mt-4">
+                    <div class="form-group">
+                        <label for="brand">Brand:</label>
+                        <input type="text" class="form-control" id="brand" name="brand">
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model:</label>
+                        <input type="text" class="form-control" id="model" name="model">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <div id="loading-message">Scraping data, please wait...</div>
+                <div id="success-message" class="alert alert-success mt-3" style="display: none;">Scraping completed successfully!</div>
+                <div id="no-records-message" class="alert alert-warning mt-3" style="display: none;">No records found.</div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('car-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const brand = document.getElementById('brand').value;
+            const model = document.getElementById('model').value;
+
+            document.getElementById('loading-message').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('no-records-message').style.display = 'none';
+
+            fetch('/fetch_data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ brand: brand, model: model }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading-message').style.display = 'none';
+                if (data.success) {
+                    document.getElementById('success-message').style.display = 'block';
+                } else {
+                    document.getElementById('no-records-message').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading-message').style.display = 'none';
+                alert('No records found.');
+            });
+        });
+    </script>
+</body>
+</html>
