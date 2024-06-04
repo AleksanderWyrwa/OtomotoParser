@@ -19,7 +19,7 @@ Kroki do uruchomienia projektu
    
 •	Przejdź do katalogu projektu:
 
-      cd project
+      cd ./projectDirectory/otomotoParser
    
 •	Uruchom Docker Compose:
 
@@ -48,7 +48,7 @@ Steps to Run the Project:
   
 • Navigate to the project directory:
 
-     cd project directory
+     cd ./projectDirectory/otomotoParser
   
 • Run Docker Compose:
 
