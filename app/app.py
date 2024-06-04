@@ -1,6 +1,6 @@
+import sqlite3
 import requests
 from flask import Flask, render_template, jsonify, request
-import sqlite3
 
 app = Flask(__name__)
 
@@ -51,6 +51,11 @@ def fetch_data():
     base_url = f'https://www.otomoto.pl/osobowe/{brand}' + (f'/{model}' if model else '')
 
     num_pages_to_scrape = 5
+
+    # Check if the brand exists by requesting the brand page
+    brand_page_response = requests.get(base_url)
+    if brand_page_response.url == 'https://www.otomoto.pl/':
+        return f"Brand '{brand}' does not exist on Otomoto.", 404
 
     # Make request to parser container's API to fetch data
     response = requests.post(f"{PARSER_API_URL}/fetch_data",
