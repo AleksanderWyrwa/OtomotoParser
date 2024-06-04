@@ -42,6 +42,7 @@ def api_filter_cars():
     conn.close()
     return jsonify(filtered_cars)
 
+
 @app.route('/fetch_data', methods=['POST'])
 def fetch_data():
     data = request.json
@@ -54,10 +55,15 @@ def fetch_data():
     # Make request to parser container's API to fetch data
     response = requests.post(f"{PARSER_API_URL}/fetch_data",
                              json={"base_url": base_url, "num_pages": num_pages_to_scrape})
-    if response.status_code == 200:
-        return "Data fetched and stored in the database."
 
-    return "Failed to fetch data", 500
+    if response.status_code == 200:
+        if response.text == "Data fetched and stored in the database.":
+            return "Data fetched and stored in the database."
+        else:
+            return "No data found to scrape.", 404
+    else:
+        return "Failed to fetch data", 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

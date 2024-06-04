@@ -7,7 +7,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-
         #loading-message {
             display: none;
             font-size: 1.5rem;
@@ -39,7 +38,7 @@
                 </div>
             </div>
             <div class="col-9">
-                <h1 class="text-center">Car Finder</h1>
+                <h1 class="text-center">Car Search</h1>
                 <p class="text-center">Here u choose a brand and a model of a car to parse. You can also choose only a brand</p>
                 <form id="car-form" class="mt-4">
                     <div class="form-group">
@@ -54,7 +53,7 @@
                 </form>
                 <div id="loading-message">Scraping data, please wait...</div>
                 <div id="success-message" class="alert alert-success mt-3" style="display: none;">Scraping completed successfully!</div>
-                <div id="no-records-message" class="alert alert-warning mt-3" style="display: none;">No records found.</div>
+                <div id="no-data-notification" class="alert alert-danger" style="display: none;">No data found for the selected criteria. Please try again.</div>
             </div>
         </div>
     </div>
@@ -72,7 +71,6 @@
 
             document.getElementById('loading-message').style.display = 'block';
             document.getElementById('success-message').style.display = 'none';
-            document.getElementById('no-records-message').style.display = 'none';
 
             fetch('/fetch_data', {
                 method: 'POST',
@@ -81,19 +79,16 @@
                 },
                 body: JSON.stringify({ brand: brand, model: model }),
             })
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
+                console.log(data);
                 document.getElementById('loading-message').style.display = 'none';
-                if (data.success) {
-                    document.getElementById('success-message').style.display = 'block';
-                } else {
-                    document.getElementById('no-records-message').style.display = 'block';
-                }
+                document.getElementById('success-message').style.display = 'block';
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('loading-message').style.display = 'none';
-                alert('No records found.');
+                alert('An error occurred during scraping.');
             });
         });
     </script>
