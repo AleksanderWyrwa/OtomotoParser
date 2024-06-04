@@ -15,7 +15,7 @@ Kroki do uruchomienia projektu
 
 •	Sklonuj repozytorium:
 
-      git clone https://github.com/AleksanderWyrwa/OtomotoParser.git
+      git clone https://github.com/AleksanderWyrwa/otomotoParser.git
    
 •	Przejdź do katalogu projektu:
 
@@ -44,7 +44,7 @@ Steps to Run the Project:
 
 • Clone the repository:
 
-     git clone https://github.com/AleksanderWyrwa/OtomotoParser.git
+     git clone https://github.com/AleksanderWyrwa/otomotoParser.git
   
 • Navigate to the project directory:
 
