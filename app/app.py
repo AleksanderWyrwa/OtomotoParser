@@ -4,7 +4,7 @@ import sqlite3
 
 app = Flask(__name__)
 
-PARSER_API_URL = "http://parser:5000"
+PARSER_API_URL = "http://parser:5000" #test
 
 def get_unique_brands():
     conn = sqlite3.connect('/data/cars.db')
