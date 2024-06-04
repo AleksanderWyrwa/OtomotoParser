@@ -54,12 +54,12 @@ def fetch_data():
 
     # Check if the brand exists by requesting the brand page
     brand_page_response = requests.get(base_url)
-    if brand_page_response.url == 'https://www.otomoto.pl/osobowe/':
-        return f"Brand '{brand}' does not exist on Otomoto.", 404
-
-    # Make request to parser container's API to fetch data
-    response = requests.post(f"{PARSER_API_URL}/fetch_data",
-                             json={"base_url": base_url, "num_pages": num_pages_to_scrape})
+    if brand_page_response.url != 'https://www.otomoto.pl/osobowe/':
+        # Make request to parser container's API to fetch data
+        response = requests.post(f"{PARSER_API_URL}/fetch_data",
+                                 json={"base_url": base_url, "num_pages": num_pages_to_scrape})
+    else:
+        return render_template('error.html')
 
     if response.status_code == 200:
         if response.text == "Data fetched and stored in the database.":
